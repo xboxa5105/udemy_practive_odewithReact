@@ -1,7 +1,10 @@
 import express from "express";
 import {default as authRoutes} from "./routes/authRoutes";
+import mongoose from "mongoose";
 import "./services/passport";
+import { default as keys } from "./config/keys";
 const app = express();
+mongoose.connect(`mongodb+srv://${keys.mongodbUsername}:${keys.mongodbPassword}@cluster0-uha59.mongodb.net/test?retryWrites=true&w=majority`)
 
 authRoutes(app);
 
