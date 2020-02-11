@@ -1,8 +1,7 @@
-import { mongoose } from "mongoose";
-const { Schema } = mongoose;
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   googleId: String
 });
-
-mongoose.model("users", userSchema);
+export default mongoose.model("users", userSchema);
