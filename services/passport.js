@@ -1,7 +1,8 @@
-import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { default as keys } from "../config/keys";
-import User from "../models/User";
+/* eslint-disable consistent-return */
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import keys from '../config/keys';
+import User from '../models/User';
 
 passport.serializeUser((user, cb) => {
   cb(null, user.id);
@@ -18,19 +19,16 @@ export default passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: "http://localhost:5000/auth/google/callback",
+      callbackURL: 'http://localhost:3000/auth/google/callback',
     },
-    async function (accessToken, refreshToken, profile, cb) {
-      console.log("accessToken", accessToken);
-      console.log("profile", profile);
+    (async (accessToken, refreshToken, profile, cb) => {
+      console.log('accessToken', accessToken);
+      console.log('profile', profile);
       User.findOne({ googleId: profile.id }, (existingUser) => {
         if (existingUser) {
           return cb(null, existingUser);
-        } else {
-          new User({ googleId: profile.id }).save().then((user) => {
-            return cb(null, user);
-          });
         }
+        new User({ googleId: profile.id }).save().then((user) => cb(null, user));
       });
       // const user = await User.findOne({ googleId: profile.id })
       // if (user) {
@@ -38,6 +36,6 @@ export default passport.use(
       // }else{
       //   await new User({ googleId: profile.id }).save();
       // }
-    }
-  )
+    }),
+  ),
 );
