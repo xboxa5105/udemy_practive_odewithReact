@@ -1,7 +1,9 @@
-import mongoose from "mongoose";
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  googleId: String
+  googleId: String,
+  credits: { type: Number, default: 0 },
 });
-export default mongoose.model("users", userSchema);
+export default mongoose.model('users', userSchema);
