@@ -23,8 +23,7 @@ export default passport.use(
     },
     (async (accessToken, refreshToken, profile, cb) => {
       console.log('accessToken', accessToken);
-      console.log('profile', profile);
-      User.findOne({ googleId: profile.id }, (existingUser) => {
+      User.findOne({ googleId: profile.id }, (err, existingUser) => {
         if (existingUser) {
           return cb(null, existingUser);
         }

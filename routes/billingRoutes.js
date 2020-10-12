@@ -16,7 +16,7 @@ export default function billingRoutes(app) {
 
     req.user.credits += 5;
     const user = await req.user.save();
-    console.log(user);
+    console.log('user: ', user);
     res.send(user);
   });
 }
